@@ -1,0 +1,9 @@
+{
+  "name": "ip-info",
+  "version": "1.0.0",
+  "description": "Simple IP information service",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev"
+  }
+}
