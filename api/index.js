@@ -6,8 +6,8 @@ export default async function handler(req, res) {
              'unknown';
 
   try {
-    // Fetch geolocation data from ipapi.co (free, no API key needed)
-    const geoResponse = await fetch(`https://ipapi.co/${ip}/json/`);
+    // Fetch geolocation data from ip-api.com (free, 45 req/min, no API key needed)
+    const geoResponse = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,country,countryCode,region,regionName,city,lat,lon,timezone,isp,org,as,query`);
     const geoData = await geoResponse.json();
 
     // Check if request is from curl or browser
@@ -18,15 +18,15 @@ export default async function handler(req, res) {
 
     // Prepare response data
     const data = {
-      ip: geoData.ip || ip,
-      asn: geoData.asn || 'unknown',
-      org: geoData.org || 'unknown',
+      ip: geoData.query || ip,
+      asn: geoData.as || 'unknown',
+      org: geoData.org || geoData.isp || 'unknown',
       city: geoData.city || 'unknown',
-      region: geoData.region || 'unknown',
-      country: geoData.country_name || 'unknown',
-      country_code: geoData.country_code || 'unknown',
-      latitude: geoData.latitude || 'unknown',
-      longitude: geoData.longitude || 'unknown',
+      region: geoData.regionName || 'unknown',
+      country: geoData.country || 'unknown',
+      country_code: geoData.countryCode || 'unknown',
+      latitude: geoData.lat || 'unknown',
+      longitude: geoData.lon || 'unknown',
       timezone: geoData.timezone || 'unknown'
     };
 
